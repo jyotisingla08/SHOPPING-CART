@@ -1,0 +1,131 @@
+<html>
+	<head>	
+	    <link rel="stylesheet" type="text/css" href="cartcss.css">
+		<title>MY CART</title>
+	</head>
+	<style>
+	div{
+	border:2px solid black;
+	border-radius:6px;
+	}
+	</style>
+	
+	<body>
+	<div id="b" >	
+		<div>
+			<h1 align="center">LIST IN CART<h1>
+		</div>
+		
+		<div id = "list" style="padding:50px">
+		<p id="a3"></p>
+		</div>
+		
+		
+	</div>	
+	
+	</body>
+	<script>
+		var c=JSON.parse(localStorage.getItem("cartt"));
+		var dd=[];
+		for(i=0;i<c.length;i++)
+		{
+			var o=new Object();
+		    o.id=c[i].id;
+		    i=c[i].id;
+		    o.name=c[i].name;
+		    o.price=c[i].price;
+		    o.qty=c[i].qty;
+		    dd.push(o);
+		    adom(o);
+		}
+		 function findindex(x)
+    {
+      for(i=0;i<dd.length;i++)
+      {
+      	if(dd[i].id==x)
+      		return i;
+      }
+    }
+    function break1()
+	{
+        var a = document.getElementById("b");
+        var b = document.createElement("br");
+        a.appendChild(b);
+	}
+		function adom(x)
+{
+	var b=document.getElementById("a3");
+    var a=document.createElement("div");
+    console.log(x.id);
+    a.setAttribute("id",x.id);
+    var c=document.createTextNode("PRODUCT NAME:- "+x.name+"   "+"   ");
+   var d=document.createTextNode("PRODUCT PRICE:- "+x.price+"  "+"   ");
+   var m=document.createTextNode("PRODUCT QTY:- "+x.qty+"  "+"   ");
+   a.appendChild(c);
+   a.appendChild(d);
+   a.appendChild(m);
+
+   var e=document.createElement("button");
+		//e.innerHTML="remove";
+		var f=document.createTextNode("remove");
+		e.appendChild(f);
+		a.appendChild(e);
+		b.appendChild(a);
+		e.setAttribute("style","width:100px;height:25px");
+		e.setAttribute("class","vsbtn");
+		e.setAttribute("class","sbtn");
+		e.addEventListener("click",function(){
+			b.removeChild(a);
+			var xx=findindex(a.id);
+			dd.splice(xx,1);
+			localStorage.setItem("cartt",JSON.stringify(dd));
+
+		});
+		var p1=document.createElement("button");
+		//e.innerHTML="remove";
+		var p2=document.createTextNode("+");
+		p1.appendChild(p2);
+		a.appendChild(p1);
+		b.appendChild(a);
+		p1.setAttribute("style","width:100px;height:25px");
+		p1.setAttribute("class","vsbtn");
+		p1.setAttribute("class","sbtn");
+		p1.addEventListener("click",function(){
+
+		var yy=findindex(a.id);
+		dd[yy].qty=parseInt(dd[yy].qty)+1;
+		localStorage.setItem("cartt",JSON.stringify(dd));
+		var n=a.childNodes;
+		var n1=document.createTextNode("PRODUCT QTY:"+dd[yy].qty);
+		console.log(n);
+		a.replaceChild(n1,n[2]);
+	});
+var m1=document.createElement("button");
+		//e.innerHTML="remove";
+		var m2=document.createTextNode("-");
+		m1.appendChild(m2);
+		a.appendChild(m1);
+		b.appendChild(a);
+		m1.setAttribute("style","width:100px;height:25px");
+		m1.setAttribute("class","vsbtn");
+		m1.setAttribute("class","sbtn");
+		m1.addEventListener("click",function(){
+		var yy=findindex(a.id);
+			if(dd[yy].qty=='0'){
+				dd[yy].qty=dd[yy].qty-1;
+				alert("OUT OF STOCK");
+			}
+			else{
+				dd[yy].qty=dd[yy].qty-1;
+				//dd[yy]=yy;
+				localStorage.setItem("cartt",JSON.stringify(dd));
+				var n=a.childNodes;
+		var n1=document.createTextNode("PRODUCT QTY:"+dd[yy].qty);
+		console.log(n);
+		a.replaceChild(n1,n[2]);
+			}
+	});
+}
+
+	</script>
+</html>
